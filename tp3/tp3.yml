@@ -1,0 +1,44 @@
+---
+- name: Install apache2 et mysql server 
+  hosts: all
+  
+  tasks:
+  - name: install apache2 et mysql 
+    ansible.builtin.apt:
+       name: "{{ item }}"
+       state: present
+       update_cache: true
+    loop:
+      - apache2
+      - mysql-server
+    when: "'gp1' in group_names" 
+
+  - name: install git nginx cowsay
+    ansible.builtin.apt:
+       name: "{{ item }}"
+       state: present
+       update_cache: true
+    loop:
+      - git
+      - nginx
+      - cowsay
+    when: "'gp2' in group_names" 
+
+  - name: Gather the package facts
+    ansible.builtin.package_facts:
+       manager: auto
+
+  - name: install 
+    ansible.builtin.apt:
+       name: "ufw"
+       state: present
+       update_cache: true
+    when: "'Ubuntu' ==  ansible_facts['distribution']"
+
+  - name: change html file 
+    ansible.builtin.template:
+      src: "index.html"
+      dest: /var/www/html/index.html
+      mode: '0644'
+    when: "'apache2' in ansible_facts.packages or 'nginx' in ansible_facts.packages"
+
