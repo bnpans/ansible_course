@@ -1,8 +1,4 @@
 ---
-- name: Install apache2 et mysql server
-  hosts: all
-
-  tasks:
     - name: Install apache2 et mysql
       ansible.builtin.apt:
         name: "{{ item }}"

@@ -1,0 +1,13 @@
+---
+- name: execute tp1 tp2 tp3 tp4
+  hosts: all
+
+  tasks:
+    - name: "Import tasks"
+      ansible.builtin.include_tasks:
+        file: "{{ item }}"
+      loop:
+           - ./tp1.yml
+           - ./tp2.yml
+           - ./tp3.yml
+           - ./tp4.yml

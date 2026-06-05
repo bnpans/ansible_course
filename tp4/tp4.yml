@@ -1,0 +1,6 @@
+---
+- name: Install apache2 et mysql server
+  hosts: all
+
+  roles:
+    - geerlingguy.docker
